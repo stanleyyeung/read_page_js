@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "curl_test_map": "file:",
+    "fs": "^0.0.1-security",
     "request": "^2.88.2",
     "uglify-js": "^3.19.3"
   }

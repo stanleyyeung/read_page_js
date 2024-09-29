@@ -53,13 +53,18 @@ request('https://www.google.com/maps/d/viewer?mid=1ajJqZDkUYSqW5JDGs554Z6C560SvX
       //   console.log(locationArr[i]);
       // }
 
-      for(i=0; i < detailArr.length; i++) {
-        console.log(detailArr[i][5][0]);
-        console.log(detailArr[i][5][3]);
-        console.log(detailArr[i][6]);
-        console.log(detailArr[i][1]);
-        console.log(detailArr[i][7]);
-      }
+    //   for(i=0; i < detailArr.length; i++) {
+    //     console.log(detailArr[i][5][0]);
+    //     console.log(detailArr[i][5][3]);
+    //     console.log(detailArr[i][6]);
+    //     console.log(detailArr[i][1]);
+    //     console.log(detailArr[i][7]);
+    // }
+    
+    const jsonString = JSON.stringify(detailArr);
+
+    fs.writeFileSync('test.json', jsonString);
+    
   }
 
 });
