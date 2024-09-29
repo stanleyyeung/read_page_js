@@ -42,7 +42,7 @@ jobs:
           fi
         
       - name: Overwrite JSON
-        if: steps.check-json.outcome == 'success' && env.DIFFERENT_CSV == 'true'
+        if: steps.check-json.outcome == 'success' && env.DIFFERENT_JSON == 'true'
         run: |
           mv data/temp.json data/output.json
           
