@@ -17,12 +17,35 @@ jobs:
           node-version: 18
       - run: npm install
 
-      - name: Remove existing JSON file
-        run: rm test.json
-
       - name: Download html file and write as JSON
         run: node read_page.js
 
+      - name: Check JSON File Size
+        id: check-json
+        run: |
+          if [ -s data/temp.json ]; then
+            echo "JSON file is not empty."
+          else
+            echo "JSON file is empty."
+            exit 1
+          fi
+          
+      - name: Check for Differences
+        id: check-differences
+        run: |
+          if ! diff -q data/temp.json data/output.json; then
+            echo "JSON files are different."
+            echo "DIFFERENT_JSON=true" >> $GITHUB_ENV
+          else
+            echo "JSON files are the same. Skipping commit."
+            echo "DIFFERENT_JSON=false" >> $GITHUB_ENV
+          fi
+        
+      - name: Overwrite JSON
+        if: steps.check-json.outcome == 'success' && env.DIFFERENT_CSV == 'true'
+        run: |
+          mv data/temp.json data/output.json
+          
       - name: Commit and Push Changes
         run: |
           git config --global user.name "Stanley Yeung"
