@@ -1,4 +1,4 @@
-name: Daily CSV Update
+name: Daily JSON Update
 
 on:
   # schedule:
