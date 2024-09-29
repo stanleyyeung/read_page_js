@@ -15,13 +15,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-        - run: npm install
+      - run: npm install
 
       - name: Remove existing JSON file
         run: rm test.json
 
       - name: Download html file and write as JSON
-      - run: node read_page.js
+        run: node read_page.js
 
       - name: Commit and Push Changes
         run: |
