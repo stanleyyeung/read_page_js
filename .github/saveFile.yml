@@ -1,0 +1,48 @@
+name: Daily CSV Update
+
+on:
+  # schedule:
+  #   - cron: '0 * * * *' # Runs every day at midnight (UTC)
+  workflow_dispatch:
+
+jobs:
+  update-csv:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+        - run: npm install
+
+      - name: Remove existing JSON file
+        run: rm test.json
+
+      - name: Download html file and write as JSON
+      - run: node read_page.js
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "Stanley Yeung"
+          git config --global user.email "stanley.hk18@gmail.com"
+          
+          timestamp=$(date +'%Y%m%d%H%M%S')
+          branch_name="update-JSON-$timestamp"
+
+          git checkout -b "$branch_name"
+
+          git add .
+
+          git commit -m "Update JSON file"
+
+          git push origin "$branch_name"
+
+          git checkout main
+          git merge --no-ff "$branch_name"
+          git push origin main
+
+          # delete the temporary branch
+          git branch -d "$branch_name"
+          git push origin --delete "$branch_name"
